@@ -34,6 +34,7 @@ public class Student {
     }
 
     public boolean checkSomething() {
+        // do something
         return true;
     }
 

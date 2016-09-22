@@ -1,7 +1,5 @@
 package Kapitel8;
 
-import Kapitel8.Student;
-
 /**
  * Created by dieterbiedermann on 20.09.16.
  */
