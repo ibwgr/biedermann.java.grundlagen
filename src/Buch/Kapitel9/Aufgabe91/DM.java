@@ -5,8 +5,10 @@ package Buch.Kapitel9.Aufgabe91;
  */
 public class DM extends Euro {
 
+    public static final double KURS = 1.95583;
+
     public DM(double wert) {
-        super(wert/1.95583);
+        super(wert/KURS);
     }
 
     public DM(Euro euro) {
@@ -14,7 +16,7 @@ public class DM extends Euro {
     }
 
     public double waehrungsBetrag() {
-        return this.euroBetrag() * 1.95583;
+        return this.euroBetrag() * KURS;
     }
 
 }

@@ -5,8 +5,10 @@ package Buch.Kapitel9.Aufgabe91;
  */
 public class Franc extends Euro {
 
+    public static final double KURS = 6.55957;
+
     public Franc(double wert) {
-        super(wert/6.55957);
+        super(wert/KURS);
     }
 
     public Franc(Euro euro) {
@@ -14,7 +16,7 @@ public class Franc extends Euro {
     }
 
     public double waehrungsBetrag() {
-        return this.euroBetrag() * 6.55957;
+        return this.euroBetrag() * KURS;
     }
 
 }

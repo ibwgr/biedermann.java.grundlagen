@@ -5,8 +5,10 @@ package Buch.Kapitel9.Aufgabe91;
  */
 public class Lire extends Euro {
 
+    public static final double KURS = 1936.27;
+
     public Lire(double wert) {
-        super(wert/1936.27);
+        super(wert/KURS);
     }
 
     public Lire(Euro euro) {
@@ -14,7 +16,7 @@ public class Lire extends Euro {
     }
 
     public double waehrungsBetrag() {
-        return this.euroBetrag() * 1936.27;
+        return this.euroBetrag() * KURS;
     }
 
 }
