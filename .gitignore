@@ -3,6 +3,9 @@
 
 # own stuff
 *.iml
+.DS_Store
+.idea/
+src/.DS_Store
 
 # User-specific stuff:
 .idea/workspace.xml
