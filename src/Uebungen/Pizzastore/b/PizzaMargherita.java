@@ -1,9 +1,9 @@
-package Uebungen.Pizzastore;
+package Uebungen.Pizzastore.b;
 
 /**
  * Created by dieterbiedermann on 20.10.16.
  */
-public class PizzaMargherita implements Pizza {
+public class PizzaMargherita extends Pizza {
     private int groesse;
 
     protected static final int KLEIN = 1;

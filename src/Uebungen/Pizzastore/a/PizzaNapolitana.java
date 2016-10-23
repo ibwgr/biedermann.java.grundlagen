@@ -1,4 +1,4 @@
-package Uebungen.Pizzastore;
+package Uebungen.Pizzastore.a;
 
 /**
  * Created by dieterbiedermann on 20.10.16.

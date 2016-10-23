@@ -1,7 +1,6 @@
-package Uebungen.Pizzastore;
+package Uebungen.Pizzastore.b;
 
 import Prog1Tools.IOTools;
-import com.sun.tools.doclets.formats.html.SourceToHTMLConverter;
 
 /**
  * Created by dieterbiedermann on 20.10.16.
