@@ -1,4 +1,4 @@
-package A3;
+package Buch.Kapitel3;
 
 import Prog1Tools.IOTools;
 

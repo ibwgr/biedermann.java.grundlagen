@@ -6,6 +6,7 @@
 .DS_Store
 .idea/
 src/.DS_Store
+*.log
 
 # User-specific stuff:
 .idea/workspace.xml
