@@ -1,6 +1,4 @@
-package others;
-
-import java.util.Arrays;
+package Others.Test;
 
 /**
  * Created by dieterbiedermann on 31.08.16.

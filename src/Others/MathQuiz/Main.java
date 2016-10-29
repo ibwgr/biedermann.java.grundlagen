@@ -1,4 +1,4 @@
-package others;
+package Others.MathQuiz;
 
 import java.util.Scanner;
 
@@ -8,8 +8,8 @@ import java.util.Scanner;
 public class Main {
     public static void main (String[] args) {
 
-/*        others.Dog dogObj = new others.Dog("Strolch");
-        others.Cat catObj = new others.Cat("Susi");
+/*        Dog dogObj = new Dog("Strolch");
+        Cat catObj = new Cat("Susi");
 
         dogObj.makeSound();
 

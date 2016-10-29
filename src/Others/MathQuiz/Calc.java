@@ -1,4 +1,4 @@
-package others;
+package Others.MathQuiz;
 
 import java.util.Random;
 

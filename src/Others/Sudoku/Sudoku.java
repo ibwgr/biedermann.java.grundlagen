@@ -1,6 +1,4 @@
-package Sudoku;
-
-import java.util.Arrays;
+package Others.Sudoku;
 
 /**
  * Created by dieterbiedermann on 31.08.16.

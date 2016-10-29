@@ -1,4 +1,4 @@
-package others;
+package Others.Test;
 
 /**
  * Created by dieterbiedermann on 28.08.16.
