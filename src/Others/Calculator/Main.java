@@ -1,5 +1,6 @@
 package Others.Calculator;
 
+import java.util.IllegalFormatCodePointException;
 import java.util.Scanner;
 
 /**
@@ -14,10 +15,13 @@ public class Main {
         System.out.print("Enter Math Expression => ");
         str = scan.nextLine();
 
-        Expression expr = new Expression(str);
-
-        System.out.println("Result => ");
-        System.out.println(expr.getSteps());
+        try {
+            Expression expr = new Expression(str);
+            System.out.println("Result => ");
+            System.out.println(expr.getSteps());
+        } catch (IllegalArgumentException ex) {
+            System.out.println("Error in Expression => " + ex.getMessage());
+        }
 
     }
 }
