@@ -28,7 +28,7 @@ public abstract class Operation extends Arithmetic{
 
     @Override
     public String toString() {
-        return Display.getOperation(operands, operator);
+        return Display.getOperation(operands, operator) + " = " + Display.getDouble(getResult());
     }
 
 }

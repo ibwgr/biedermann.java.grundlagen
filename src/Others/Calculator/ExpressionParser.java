@@ -16,37 +16,36 @@ public final class ExpressionParser {
             throw new ExpressionFormatException("wrong characters in expression");
         }
 
-        // check parenthesises
-        int counter = 0;
-        for (int i = 0; i < str.length() ; i++)
+        // check parentheses
         {
-            char cTemp = str.charAt(i);
-            switch (cTemp)
-            {
-                case '(':
-                {
-                    counter++;
-                    break;
-                }
-                case ')':
-                {
-                    counter--;
-                    break;
+            int counter = 0;
+            for (int i = 0; i < str.length(); i++) {
+                char cTemp = str.charAt(i);
+                switch (cTemp) {
+                    case '(': {
+                        counter++;
+                        break;
+                    }
+                    case ')': {
+                        counter--;
+                        break;
+                    }
                 }
             }
-        }
-        if (counter != 0) {
-            throw new ExpressionFormatException("uneven number of parenthesises in expression");
+            if (counter != 0) {
+                throw new ExpressionFormatException("uneven number of parentheses in expression");
+            }
         }
 
-        // check order of characters eg. ++ not allowed
-
+        if (str.matches(".*(\\+|\\*|/|-)\\s*(\\+|\\*|/|--).*")) {
+            throw new ExpressionFormatException("wrong order of operators in expression");
+        }
 
 
         return true;
     }
 
-    public static String getFirstParenthesis(String str)
+    public static String getFirstParentheses(String str)
     {
         States state = States.NOTFOUND;
         int counter = 0;

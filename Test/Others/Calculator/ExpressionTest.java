@@ -47,6 +47,20 @@ public class ExpressionTest {
         }
 
         @Test
+        public void withSimpleAdditionWithNegativeNumber_returnsCorrectNumber() {
+            Expression expression = new Expression("5 + -2");
+            Double result = expression.getResult();
+            Assert.assertEquals(3, result, 0);
+        }
+
+        @Test
+        public void withSimpleAdditionWithNegativeNumberFirst_returnsCorrectNumber() {
+            Expression expression = new Expression("-5 + 2");
+            Double result = expression.getResult();
+            Assert.assertEquals(-3, result, 0);
+        }
+
+        @Test
         public void withMultipleAdditions_returnsCorrectNumber() {
             Expression expression = new Expression("5 + 2 + 1");
             Double result = expression.getResult();
@@ -85,7 +99,7 @@ public class ExpressionTest {
         public void withNegativeNumbers_returnsCorrectNumber() {
             Expression expression = new Expression("5 + -2 + 2 * -2 - 3");
             Double result = expression.getResult();
-            Assert.assertEquals(8, result, 0);
+            Assert.assertEquals(-4, result, 0);
         }
     }
 
@@ -98,13 +112,13 @@ public class ExpressionTest {
         }
 
         @Test
-        public void withInvalidExpression_returnsExceptionParenthesises() {
+        public void withInvalidExpression_returnsExceptionParentheses() {
             try {
                 Expression expression = new Expression("(5 * 2( * 1");
                 Assert.fail("No exception thrown");
             } catch (IllegalArgumentException ex) {
                 // check message
-                Assert.assertEquals("uneven number of parenthesises in expression", ex.getMessage());
+                Assert.assertEquals("uneven number of parentheses in expression", ex.getMessage());
             }
         }
     }

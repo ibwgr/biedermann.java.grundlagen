@@ -8,6 +8,9 @@ import java.util.regex.Pattern;
 
 /**
  * Created by dieterbiedermann on 26.10.16.
+ *
+ * Expression for basic math operations (+, -, *, /)
+ *
  */
 public class Expression extends Arithmetic {
     private ArrayList<Arithmetic> arithmetics = new ArrayList<>();
@@ -26,18 +29,18 @@ public class Expression extends Arithmetic {
         }
 
         // Calculate
-        // 1. parenthesis
+        // 1. parentheses
         // 2. *, /
         // 3. +, -
         // find parentheses with parser
-        String parenthesesStr = ExpressionParser.getFirstParenthesis(tempStr);
+        String parenthesesStr = ExpressionParser.getFirstParentheses(tempStr);
         while (!parenthesesStr.isEmpty()) {
             arithmetics.add(new Expression(parenthesesStr));
             parenthesesStr = "(" + parenthesesStr + ")";
             tempStr = tempStr.replaceFirst(parenthesesStr.replaceAll(
                     "[\\<\\(\\[\\{\\\\\\^\\-\\=\\$\\!\\|\\]\\}\\)‌​\\?\\*\\+\\.\\>]", "\\\\$0")
                     , String.valueOf(arithmetics.get(arithmetics.size()-1).getResult()));
-            parenthesesStr = ExpressionParser.getFirstParenthesis(tempStr);
+            parenthesesStr = ExpressionParser.getFirstParentheses(tempStr);
         }
         while (!tempStr.matches("^-?\\d*\\.?\\d*$")) {
             // find *,/
@@ -45,10 +48,7 @@ public class Expression extends Arithmetic {
             Matcher matcher2 = pattern2.matcher(tempStr);
             while (matcher2.find()) {
                 String matchStr = matcher2.group();
-                /**
-                 * ToDo: negative zahlen funktionieren noch nicht !!!!!
-                 */
-                String[] s = matchStr.replaceAll("(\\s*|\\+|-|^|$)", "").split("\\s*(\\*|/)\\s*");
+                String[] s = matchStr.replaceAll("(\\s*|^|$)", "").split("\\s*(\\*|/)\\s*");
                 double[] d = {Double.valueOf(s[0]), Double.valueOf(s[1])};
                 if (matchStr.matches(".*\\*.*")) {
                     arithmetics.add(new Multiplication(d));
@@ -65,7 +65,7 @@ public class Expression extends Arithmetic {
             Matcher matcher3 = pattern3.matcher(tempStr);
             while (matcher3.find()) {
                 String matchStr = matcher3.group();
-                String[] s = matchStr.replaceAll("(\\s*|^|$)", "").split("\\s*(\\+|-)\\s*");
+                String[] s = matchStr.replaceAll("(\\s*|^|$)", "").split("\\s*(\\+|(?<=\\d)-)\\s*");
                 double[] d = {Double.valueOf(s[0]), Double.valueOf(s[1])};
                 if (matchStr.matches(".*\\+.*")) {
                     arithmetics.add(new Addition(d));
@@ -78,18 +78,29 @@ public class Expression extends Arithmetic {
                 this.setResult(arithmetics.get(arithmetics.size()-1).getResult());
             }
         }
-        System.out.println("Resultat => "+this);
+        //System.out.println("Result => "+this);
+        //System.out.println(this.getSteps());
 
+    }
+
+    public String getSteps() {
+        String str = "";
+
+        //str = str + "Size:"+arithmetics.size() + "\n";
+        for (Arithmetic a : arithmetics) {
+            if (a instanceof Expression) {
+                str = str + ((Expression) a).getSteps();
+            } else {
+                str = str + a + "\n";
+            }
+
+        }
+
+        return str;
     }
 
     @Override
     public String toString() {
-        String str = "";
-        str = str + "Size:"+arithmetics.size();
-        for (Arithmetic a : arithmetics) {
-            str = str + a + " ";
-        }
-
         return input + " = " + Display.getDouble(getResult());
     }
 
