@@ -101,6 +101,20 @@ public class ExpressionTest {
             Double result = expression.getResult();
             Assert.assertEquals(-4, result, 0);
         }
+
+        @Test
+        public void withLongExpression_returnsCorrectNumber() {
+            Expression expression = new Expression("1+1+2--3-2*2/1+1+2--3-2*2+1+1+2--3-2*2");
+            Double result = expression.getResult();
+            Assert.assertEquals(737, result, 0);
+        }
+
+        @Test
+        public void withDecimalNumbers_returnsCorrectNumber() {
+            Expression expression = new Expression("345.03*200.1102/2.3+123");
+            Double result = expression.getResult();
+            Assert.assertEquals(551.029707150838, result, 0);
+        }
     }
 
     public static class toString {

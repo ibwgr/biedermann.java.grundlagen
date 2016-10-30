@@ -12,7 +12,7 @@ public final class ExpressionParser {
     public static Boolean validate(String str) throws ExpressionFormatException{
 
         // check correct characters: +,-,*,/,(,)
-        if (!str.matches("(\\d|\\s|\\+|-|\\*|/|\\(|\\))*")) {
+        if (!str.matches("(\\d|\\.|\\s|\\+|-|\\*|/|\\(|\\))*")) {
             throw new ExpressionFormatException("wrong characters in expression");
         }
 
@@ -37,7 +37,7 @@ public final class ExpressionParser {
             }
         }
 
-        if (str.matches(".*(\\+|\\*|/|-)\\s*(\\+|\\*|/|--).*")) {
+        if (str.matches(".*(\\.|\\+|\\*|/|-)\\s*(\\.|\\+|\\*|/|--).*")) {
             throw new ExpressionFormatException("wrong order of operators in expression");
         }
 

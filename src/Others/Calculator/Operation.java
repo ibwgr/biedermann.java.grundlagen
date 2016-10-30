@@ -22,13 +22,17 @@ public abstract class Operation extends Arithmetic{
         } else {
             this.setResult(0);
         }
+        //System.out.println("Operation Result => "+this);
     }
 
     public abstract double calculate(double operand1, double operand2);
 
     @Override
     public String toString() {
-        return Display.getOperation(operands, operator) + " = " + Display.getDouble(getResult());
+        if (operands != null && operator != null) {
+            return Display.getOperation(operands, operator) + " = " + Display.getDouble(getResult());
+        }
+        return "empty operation";
     }
 
 }

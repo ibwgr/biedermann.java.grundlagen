@@ -57,7 +57,7 @@ public class Expression extends Arithmetic {
                 }
                 tempStr = tempStr.replaceFirst(matchStr.replaceAll(
                         "[\\<\\(\\[\\{\\\\\\^\\-\\=\\$\\!\\|\\]\\}\\)‌​\\?\\*\\+\\.\\>]", "\\\\$0")
-                        , String.valueOf(arithmetics.get(arithmetics.size()-1).getResult()));
+                        , Display.getDouble(arithmetics.get(arithmetics.size()-1).getResult()));
                 this.setResult(arithmetics.get(arithmetics.size()-1).getResult());
             }
             // find +,-
@@ -74,7 +74,7 @@ public class Expression extends Arithmetic {
                 }
                 tempStr = tempStr.replaceFirst(matchStr.replaceAll(
                         "[\\<\\(\\[\\{\\\\\\^\\-\\=\\$\\!\\|\\]\\}\\)‌​\\?\\*\\+\\.\\>]", "\\\\$0")
-                        , String.valueOf(arithmetics.get(arithmetics.size()-1).getResult()));
+                        , Display.getDouble(arithmetics.get(arithmetics.size()-1).getResult()));
                 this.setResult(arithmetics.get(arithmetics.size()-1).getResult());
             }
         }

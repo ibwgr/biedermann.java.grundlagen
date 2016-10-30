@@ -62,9 +62,16 @@ public class ExpressionParserTest {
             Boolean result = ExpressionParser.validate("(1 + 2) * 3 / 5");
             Assert.assertTrue(result);
         }
+
         @Test
         public void returnsTrueWithCorrectExpressionNegativeNumber() throws Exception {
             Boolean result = ExpressionParser.validate("(1 + 2) * 3 - -5");
+            Assert.assertTrue(result);
+        }
+
+        @Test
+        public void returnsTrueWithCorrectExpressionDecimalNumber() throws Exception {
+            Boolean result = ExpressionParser.validate("345.03*200.1102/2.3+123");
             Assert.assertTrue(result);
         }
     }
