@@ -1,6 +1,5 @@
 package Others.Calculator;
 
-import java.util.IllegalFormatCodePointException;
 import java.util.Scanner;
 
 /**
