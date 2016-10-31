@@ -11,8 +11,12 @@ public class Division extends Operation {
         super(operands, Operator.DIVISION);
     }
 
-    public double calculate(double operand1, double operand2) {
-        return operand1 / operand2;
+    public double calculate(double operand1, double operand2) throws ArithmeticException {
+        if (operand2 == 0) {
+            throw new ArithmeticException("Division by zero not possible");
+        } else {
+            return operand1 / operand2;
+        }
     }
 
 }

@@ -20,6 +20,8 @@ public class Main {
             System.out.println(expr.getSteps());
         } catch (IllegalArgumentException ex) {
             System.out.println("Error in Expression => " + ex.getMessage());
+        } catch (ArithmeticException ex) {
+            System.out.println("Error in Expression => " + ex.getMessage());
         }
 
     }
