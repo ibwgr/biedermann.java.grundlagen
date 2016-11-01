@@ -41,6 +41,9 @@ public final class ExpressionParser {
             throw new ExpressionFormatException("wrong order of operators in expression");
         }
 
+        if (str.matches("(\\A(\\.|\\+|\\*|/).*|.*(\\.|\\+|\\*|/|-)\\Z)")) {
+            throw new ExpressionFormatException("number missing");
+        }
 
         return true;
     }

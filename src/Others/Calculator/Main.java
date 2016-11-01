@@ -17,7 +17,7 @@ public class Main {
         try {
             Expression expr = new Expression(str);
             System.out.println("Result => ");
-            System.out.println(expr.getSteps());
+            System.out.println(expr.getAllExprStr());
         } catch (IllegalArgumentException ex) {
             System.out.println("Error in Expression => " + ex.getMessage());
         } catch (ArithmeticException ex) {

@@ -14,6 +14,7 @@ import java.util.regex.Pattern;
  */
 public class Expression extends Arithmetic {
     private ArrayList<Arithmetic> arithmetics = new ArrayList<>();
+    private ArrayList<String> exprStrings = new ArrayList<>();
     private String input;
 
     public Expression(String str) { // example 1 + 2 + 3
@@ -33,6 +34,7 @@ public class Expression extends Arithmetic {
         // 2. *, /
         // 3. +, -
         // find parentheses with parser
+        exprStrings.add(tempStr);
         String parenthesesStr = ExpressionParser.getFirstParentheses(tempStr);
         while (!parenthesesStr.isEmpty()) {
             arithmetics.add(new Expression(parenthesesStr));
@@ -40,6 +42,7 @@ public class Expression extends Arithmetic {
             tempStr = tempStr.replaceFirst(parenthesesStr.replaceAll(
                     "[\\<\\(\\[\\{\\\\\\^\\-\\=\\$\\!\\|\\]\\}\\)‌​\\?\\*\\+\\.\\>]", "\\\\$0")
                     , String.valueOf(arithmetics.get(arithmetics.size()-1).getResult()));
+            exprStrings.add(tempStr);
             parenthesesStr = ExpressionParser.getFirstParentheses(tempStr);
         }
         while (!tempStr.matches("^-?\\d*\\.?\\d*$")) {
@@ -58,7 +61,8 @@ public class Expression extends Arithmetic {
                 tempStr = tempStr.replaceFirst(matchStr.replaceAll(
                         "[\\<\\(\\[\\{\\\\\\^\\-\\=\\$\\!\\|\\]\\}\\)‌​\\?\\*\\+\\.\\>]", "\\\\$0")
                         , Display.getDouble(arithmetics.get(arithmetics.size()-1).getResult()));
-                this.setResult(arithmetics.get(arithmetics.size()-1).getResult());
+                exprStrings.add(tempStr);
+                //this.setResult(arithmetics.get(arithmetics.size()-1).getResult());
             }
             // find +,-
             Pattern pattern3 = Pattern.compile("(^|\\s*)-?\\d+\\.?\\d*\\s*(\\+|-)\\s*-?\\d+\\.?\\d*($|\\s*)");
@@ -75,9 +79,11 @@ public class Expression extends Arithmetic {
                 tempStr = tempStr.replaceFirst(matchStr.replaceAll(
                         "[\\<\\(\\[\\{\\\\\\^\\-\\=\\$\\!\\|\\]\\}\\)‌​\\?\\*\\+\\.\\>]", "\\\\$0")
                         , Display.getDouble(arithmetics.get(arithmetics.size()-1).getResult()));
-                this.setResult(arithmetics.get(arithmetics.size()-1).getResult());
+                exprStrings.add(tempStr);
+                //this.setResult(arithmetics.get(arithmetics.size()-1).getResult());
             }
         }
+        this.setResult(Double.valueOf(tempStr));
         //System.out.println("Result => "+this);
         //System.out.println(this.getSteps());
 
@@ -93,10 +99,25 @@ public class Expression extends Arithmetic {
             } else {
                 str = str + a + "\n";
             }
+        }
+        return str;
+    }
 
+    public String getAllExprStr() {
+        String str = "";
+        str = "";
+        for (String s : exprStrings) {
+            str = str + s + "\n";
         }
 
+        if (str.isEmpty()) {
+            str = Display.getDouble(getResult());
+        }
         return str;
+    }
+
+    public ArrayList<String> getAllExpr() {
+        return exprStrings;
     }
 
     @Override
