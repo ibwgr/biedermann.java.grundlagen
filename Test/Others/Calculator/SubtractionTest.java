@@ -14,7 +14,14 @@ public class SubtractionTest {
         double[] operands = new double[] {13,3};
         Subtraction subtraction = new Subtraction(operands);
         double result = subtraction.getResult();
-        Assert.assertEquals(10, result, 1);
+        Assert.assertEquals(10, result, 0);
     }
 
+    @Test
+    public void getResultReturns10For15And3And2() throws Exception {
+        double[] operands = new double[] {15,3, 2};
+        Subtraction subtraction = new Subtraction(operands);
+        double result = subtraction.getResult();
+        Assert.assertEquals(10, result, 0);
+    }
 }

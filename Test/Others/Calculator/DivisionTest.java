@@ -15,7 +15,14 @@ public class DivisionTest {
         double[] operands = new double[] {20,2};
         Division division = new Division(operands);
         double result = division.getResult();
-        Assert.assertEquals(10, result, 1);
+        Assert.assertEquals(10, result, 0);
     }
 
+    @Test
+    public void getResultReturns10For100And2And5() throws Exception {
+        double[] operands = new double[] {100,2,5};
+        Division division = new Division(operands);
+        double result = division.getResult();
+        Assert.assertEquals(10, result, 0);
+    }
 }
