@@ -1,6 +1,5 @@
 package Others.Calculator;
 
-import Buch.Kapitel9.Aufgabe914.Mahlzeit;
 import org.junit.Assert;
 import org.junit.Test;
 
@@ -15,7 +14,15 @@ public class MultiplicationTest {
         double[] operands = new double[] {5,2};
         Multiplication multiplication = new Multiplication(operands);
         double result = multiplication.getResult();
-        Assert.assertEquals(10, result, 1);
+        Assert.assertEquals(10, result, 0);
+    }
+
+    @Test
+    public void mulitiplicationOf2And2And2Gives8() throws Exception {
+        double[] operands = new double[] {2,2, 2};
+        Multiplication multiplication = new Multiplication(operands);
+        double result = multiplication.getResult();
+        Assert.assertEquals(8, result, 0);
     }
 
 }

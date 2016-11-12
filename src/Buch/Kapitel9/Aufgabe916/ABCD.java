@@ -9,6 +9,10 @@ public class ABCD {
         a.tell();
         B b = new B();
         b.tell();
+        System.out.println(b.a);
+        a = b;
+        a.tell();
+        System.out.println(a.a);
         C c = new C();
         c.tell();
         D d = new D();

@@ -33,7 +33,7 @@ public class AdditionTest {
      * Test: getOperation
      */
     @Test
-    public void getOperationReturns2And3For2And3() {
+    public void toStringReturns2And3Equals5For2And3() {
         double[] operands = new double[] {2,3};
         Addition addition = new Addition(operands);
         String result = addition.toString();
