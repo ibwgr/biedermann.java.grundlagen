@@ -41,7 +41,7 @@ public class Expression extends Arithmetic {
             parenthesesStr = "(" + parenthesesStr + ")";
             tempStr = tempStr.replaceFirst(parenthesesStr.replaceAll(
                     "[\\<\\(\\[\\{\\\\\\^\\-\\=\\$\\!\\|\\]\\}\\)‌​\\?\\*\\+\\.\\>]", "\\\\$0")
-                    , String.valueOf(arithmetics.get(arithmetics.size()-1).getResult()));
+                    , Display.getDouble(arithmetics.get(arithmetics.size()-1).getResult()));
             exprStrings.add(tempStr);
             parenthesesStr = ExpressionParser.getFirstParentheses(tempStr);
         }
@@ -105,9 +105,22 @@ public class Expression extends Arithmetic {
 
     public String getAllExprStr() {
         String str = "";
-        str = "";
+/*
         for (String s : exprStrings) {
             str = str + s + "\n";
+        }
+*/
+
+        for (int i = 0; i < exprStrings.size(); i++) {
+            str = str + exprStrings.get(i) + "\n";
+            if (i < arithmetics.size()
+                    && arithmetics.get(i) != null) {
+                if (arithmetics.get(i).getClass() == Expression.class) {
+                    str = str + ((Expression) arithmetics.get(i)).getAllExprStr();
+                } else {
+                    str = str + arithmetics.get(i); // rechnung anzeigen
+                }
+            }
         }
 
         if (str.isEmpty()) {

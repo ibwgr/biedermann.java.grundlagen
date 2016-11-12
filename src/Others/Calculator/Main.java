@@ -18,6 +18,7 @@ public class Main {
             Expression expr = new Expression(str);
             System.out.println("Result => ");
             System.out.println(expr.getAllExprStr());
+            System.out.println(expr.getSteps());
         } catch (IllegalArgumentException ex) {
             System.out.println("Error in Expression => " + ex.getMessage());
         } catch (ArithmeticException ex) {

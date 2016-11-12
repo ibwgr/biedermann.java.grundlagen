@@ -1,9 +1,12 @@
-package Buch.Kapitel8;
+package Buch.Kapitel11.Aufgabe111;
 //
+
+import Buch.Kapitel11.Aufgabe111.studienfaecher.Fach;
+
 /**
  * Created by dieterbiedermann on 20.09.16.
  */
-public class Student {
+public class StudentNew {
 
     public static final int MATHEMATIKSTUDIUM = 1;
     public static final int ARCHITEKTURSTUDIUM = 2;
@@ -11,23 +14,24 @@ public class Student {
     public static final int WEIBLICH = 1;
     public static final int MAENNLICH = 2;
 
-    public static final Student PHANTOM;
+    public static final StudentNew PHANTOM;
 
     private String name;
-    private int nummer, fach, geburtsjahr, geschlecht;
+    private int nummer, geburtsjahr, geschlecht;
+    private Fach fach;
     private static int zaehler;
 
     // statischer Initialisierer, wird beim ersten Aufruf der Klasse ausgeführt!
     static {
-        PHANTOM = new Student("Phantom", -12345);
+        PHANTOM = new StudentNew("Phantom", -12345);
         zaehler = 0;
     }
 
-    public Student() {
+    public StudentNew() {
         zaehler++;
     }
 
-    public Student(String name, int nummer) {
+    public StudentNew(String name, int nummer) {
         // Aufruf von Constructor ohne Parameter (oben)
         this();
         this.name = name;
@@ -35,13 +39,13 @@ public class Student {
         this.nummer = nummer;
     }
 
-    public Student(String name, int nummer, int fach, int geburtsjahr) {
+    public StudentNew(String name, int nummer, Fach fach, int geburtsjahr) {
         this(name, nummer);
         this.geburtsjahr = geburtsjahr;
         this.fach = fach;
     }
 
-    public Student(String name, int nummer, int fach, int geburtsjahr, int geschlecht) {
+    public StudentNew(String name, int nummer, Fach fach, int geburtsjahr, int geschlecht) {
         this(name, nummer, fach, geburtsjahr);
         this.geschlecht = geschlecht;
     }
@@ -66,16 +70,16 @@ public class Student {
         }
     }
 
-    public int getFach() {
+    public Fach getFach() {
         return fach;
     }
 
-    public void setFach(int fach) {
+    public void setFach(Fach fach) {
         this.fach = fach;
     }
 
     public static void setZaehler(int zaehler) {
-        zaehler = zaehler;
+        StudentNew.zaehler = zaehler;
     }
 
     public boolean validateNummer() {
@@ -92,10 +96,10 @@ public class Student {
         String str;
         str = name + " (" + nummer + ")";
         switch (geschlecht) {
-            case Student.WEIBLICH:
+            case StudentNew.WEIBLICH:
                 str = str + " weiblich";
                 break;
-            case Student.MAENNLICH:
+            case StudentNew.MAENNLICH:
                 str = str + " maennlich";
                 break;
             default:

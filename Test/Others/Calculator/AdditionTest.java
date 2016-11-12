@@ -37,7 +37,7 @@ public class AdditionTest {
         double[] operands = new double[] {2,3};
         Addition addition = new Addition(operands);
         String result = addition.toString();
-        Assert.assertEquals("2 + 3", result);
+        Assert.assertEquals("2 + 3 = 5", result);
     }
 
 }

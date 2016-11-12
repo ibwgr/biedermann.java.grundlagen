@@ -62,7 +62,7 @@ public class ExpressionTest {
 
         @Test
         public void withMultipleAdditions_returnsCorrectNumber() {
-            Expression expression = new Expression("5 + 2 + 1");
+            Expression expression = new Expression("5+ 2 +1");
             Double result = expression.getResult();
             Assert.assertEquals(8, result, 0);
         }
@@ -134,6 +134,40 @@ public class ExpressionTest {
                 // check message
                 Assert.assertEquals("uneven number of parentheses in expression", ex.getMessage());
             }
+        }
+    }
+
+    public static class getSteps {
+        @Test
+        public void withSimpleExpression_returnsCorrectString() {
+            Expression expression = new Expression("(5 * 2) * 1");
+            String result = expression.getSteps();
+            Assert.assertEquals("5 * 2 = 10\n" +
+                    "10 * 1 = 10\n", result);
+        }
+
+        @Test
+        public void expressionWithNegativeNumber_returnsCorrectString() {
+            Expression expression = new Expression("1--1");
+            String result = expression.getSteps();
+            Assert.assertEquals("1 - -1 = 2\n", result);
+        }
+    }
+
+    public static class getAllExprStr{
+        @Test
+        public void simpleExpression_returnsCorrectString() {
+            Expression expression = new Expression("(5 * 2) * 1");
+            String result = expression.getAllExprStr();
+            Assert.assertEquals("(5 * 2) * 1\n" +
+                    "10.0 * 1\n" +
+                    "10\n", result);
+        }
+        @Test
+        public void expressionWithOnlyOneNumber_returnsCorrectString() {
+            Expression expression = new Expression("2");
+            String result = expression.getAllExprStr();
+            Assert.assertEquals("2\n", result);
         }
     }
 }
