@@ -18,16 +18,21 @@ public final class ExpressionParser {
 
         // check parentheses
         {
+            States state = States.NOTFOUND;
             int counter = 0;
             for (int i = 0; i < str.length(); i++) {
                 char cTemp = str.charAt(i);
                 switch (cTemp) {
                     case '(': {
+                        state = States.STARTED;
                         counter++;
                         break;
                     }
                     case ')': {
-                        counter--;
+                        if (state == States.STARTED) {
+                            state = States.FINISHED;
+                            counter--;
+                        }
                         break;
                     }
                 }

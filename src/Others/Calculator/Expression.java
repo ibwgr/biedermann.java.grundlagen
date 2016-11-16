@@ -18,7 +18,7 @@ public class Expression extends Arithmetic {
     private String input;
 
     public Expression(String str) { // example 1 + 2 + 3
-        String tempStr = str;
+        String tempStr = str.replaceAll("\\s", "");
         input = str;
 
         // Validation
@@ -40,7 +40,7 @@ public class Expression extends Arithmetic {
             arithmetics.add(new Expression(parenthesesStr));
             parenthesesStr = "(" + parenthesesStr + ")";
             tempStr = tempStr.replaceFirst(parenthesesStr.replaceAll(
-                    "[\\<\\(\\[\\{\\\\\\^\\-\\=\\$\\!\\|\\]\\}\\)‌​\\?\\*\\+\\.\\>]", "\\\\$0")
+                    "[<(\\[{\\\\\\^\\-=$!|\\]\\})‌​?*+.>]", "\\\\$0")
                     , Display.getDouble(arithmetics.get(arithmetics.size()-1).getResult()));
             exprStrings.add(tempStr);
             parenthesesStr = ExpressionParser.getFirstParentheses(tempStr);
@@ -59,7 +59,7 @@ public class Expression extends Arithmetic {
                     arithmetics.add(new Division(d));
                 }
                 tempStr = tempStr.replaceFirst(matchStr.replaceAll(
-                        "[\\<\\(\\[\\{\\\\\\^\\-\\=\\$\\!\\|\\]\\}\\)‌​\\?\\*\\+\\.\\>]", "\\\\$0")
+                        "[<(\\[{\\\\\\^\\-=$!|\\]\\})‌​?*+.>]", "\\\\$0")
                         , Display.getDouble(arithmetics.get(arithmetics.size()-1).getResult()));
                 exprStrings.add(tempStr);
                 //this.setResult(arithmetics.get(arithmetics.size()-1).getResult());
@@ -77,7 +77,7 @@ public class Expression extends Arithmetic {
                     arithmetics.add(new Subtraction(d));
                 }
                 tempStr = tempStr.replaceFirst(matchStr.replaceAll(
-                        "[\\<\\(\\[\\{\\\\\\^\\-\\=\\$\\!\\|\\]\\}\\)‌​\\?\\*\\+\\.\\>]", "\\\\$0")
+                        "[<(\\[{\\\\\\^\\-=$!|\\]\\})‌​?*+.>]", "\\\\$0")
                         , Display.getDouble(arithmetics.get(arithmetics.size()-1).getResult()));
                 exprStrings.add(tempStr);
                 //this.setResult(arithmetics.get(arithmetics.size()-1).getResult());
@@ -117,8 +117,8 @@ public class Expression extends Arithmetic {
                     && arithmetics.get(i) != null) {
                 if (arithmetics.get(i).getClass() == Expression.class) {
                     str = str + ((Expression) arithmetics.get(i)).getAllExprStr();
-                } else {
-                    str = str + arithmetics.get(i); // rechnung anzeigen
+//                } else {
+//                    str = str + arithmetics.get(i) + "\n"; // rechnung anzeigen
                 }
             }
         }

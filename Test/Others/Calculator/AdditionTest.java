@@ -18,7 +18,7 @@ public class AdditionTest {
         double[] operands = new double[] {2,3};
         Addition addition = new Addition(operands);
         double result = addition.getResult();
-        Assert.assertEquals(5, result, 2);
+        Assert.assertEquals(5, result, 0);
     }
 
     @Test
@@ -26,7 +26,7 @@ public class AdditionTest {
         double[] operands = new double[] {2,3,5};
         Addition addition = new Addition(operands);
         double result = addition.getResult();
-        Assert.assertEquals(10, result, 2);
+        Assert.assertEquals(10, result, 0);
     }
 
     /**
