@@ -1,20 +1,157 @@
 package Others.Sudoku;
 
+import java.util.ArrayList;
+
 /**
  * Created by dieterbiedermann on 31.08.16.
  */
 public class Sudoku {
 
-    public static int[][] createHide() {
-        int q = 9, n;
-        int[][] quadHide = new int[q][q];
-        int x, y, startY, endeY;
+    public static boolean check(int[][] quadCheck) {
+        int q = 9;
+        int neueZahl, startX, endeX, startY, endeY;
+        boolean isUnique = true;
 
-        for (int i = 0; i < 63; i++) {
+        for (int x = 0; x < quadCheck.length; x++) {
+            for (int y = 0; y < quadCheck.length; y++) {
+                neueZahl = quadCheck[x][y];
+                if (neueZahl == 0) {
+                    isUnique = false;
+                    break;
+                }
+                // ist Zahl bereits in Bereich, Spalte oder Zeile vorhanden
+                for (int i = 0; i < q; i++) {
+                    if ((y != i && quadCheck[x][i] == neueZahl)
+                            || (x != i && quadCheck[i][y] == neueZahl)) {
+                        isUnique = false;
+                        break;
+                    }
+                }
+                // bereich suche
+                startX = x / 3 * 3;
+                endeX = startX + 2;
+                startY = y / 3 * 3;
+                endeY = startY + 2;
+                for (int i = startX; i <= endeX; i++) {
+                    for (int j = startY; j <= endeY; j++) {
+                        if (x != i && y != j && quadCheck[i][j] == neueZahl) {
+                            isUnique = false;
+                            break;
+                        }
+                    }
+                }
+            }
+        }
+
+
+        return isUnique;
+    }
+
+
+    public static int[][] createHide(int[][] quad, int level) {
+        int q = 9, rnd, count;
+        int[][] quadHide = new int[q][q];
+        int numberCount;
+        ArrayList<Integer> numberList = new ArrayList<>();
+
+        // eine Zahl fix entfernen
+        // Level: 1 - 75
+        // Level 1 - 20: 1 Zahlen entfernen
+        // Level 21 - 40: 2 Zahlen enternen
+        // Level 41 - 60: 3 Zahlen entfernen
+        // Level 61 - 75: 4 Zahlen entfernen
+
+/*
+        for (int i = 0; i < numberCount; i++) {
+            int x;
+            do {
+                x = (int) (Math.random() * 10);
+                if (x > 9) {
+                    x = 1;
+                }
+            } while (numberList.contains(x));
+            numberList.add(x);
+        }
+*/
+
+        numberCount = (int) (Math.random() * 10) + 1;
+        if (numberCount > 9) {
+            numberCount = 1;
+        }
+        for (int x = 0; x < quad.length; x++) {
+            for (int y = 0; y < quad.length; y++) {
+                if (quad[x][y] == numberCount) {
+                    quadHide[x][y] = 1;
+                }
+            }
+        }
+
+        switch (level) {
+            case 1: numberCount = 15; break;
+            case 2: numberCount = 25; break;
+            case 3: numberCount = 35; break;
+            case 4: numberCount = 45; break;
+        }
+        for (int i = 0; i <= level+2; i++) {
+            do {
+                rnd = (int) (Math.random() * 10) + 1;
+                if (rnd > 9) {
+                    rnd = 1;
+                }
+            } while (rnd == numberCount && numberList.contains(rnd));
+            numberList.add(rnd);
+        }
+
+        count = 1;
+        for (Integer number : numberList) {
+            for (int i = 0; i <= level+count; i++) {
+                int x, y;
+                do {
+                    x = (int) (Math.random() * 10);
+                    if (x > 8) {
+                        x = 0;
+                    }
+                    y = (int) (Math.random() * 10);
+                    if (y > 8) {
+                        y = 0;
+                    }
+                } while (quad[x][y] != number && quadHide[x][y] == 1);
+                quadHide[x][y] = 1;
+            }
+            count = count + 1;
+        }
+
+        /*
+        rnd = (int) (Math.random() * 10) + 1;
+        for (int i = 0; i < numberCount; i++) {
+            if (i % (numberCount / 7) == 0) {
+                rnd = (int) (Math.random() * 10) + 1;
+                if (rnd > 9) {
+                    rnd = 1;
+                }
+            }
+
             do {
                 x = (int) (Math.random() * 10);
                 if (x > 8) {
-                    x = 1;
+                    x = 0;
+                }
+                y = (int) (Math.random() * 10);
+                if (y > 8) {
+                    y = 0;
+                }
+            } while (quad[x][y] != rnd && quadHide[x][y] == 1);
+            quadHide[x][y] = 1;
+        }
+*/
+
+/*
+        for (int i = 0; i < numberCount; i++) {
+            int x, y;
+            do {
+                x = (int) (Math.random() * 10);
+                if (x > 8) {
+                    x = 0;
                 }
                 y = (int) (Math.random() * 10);
                 if (y > 8) {
@@ -23,6 +160,7 @@ public class Sudoku {
             } while (quadHide[x][y] == 1);
             quadHide[x][y] = 1;
         }
+*/
 
         return quadHide;
     }
@@ -205,7 +343,7 @@ public class Sudoku {
         int[][] quad, quadHide;
 
         quad = create();
-        quadHide = createHide();
+        quadHide = createHide(quad, 3);
 
         for (int i = 0; i < quad.length; i++) {
             for (int j = 0; j < quad.length; j++) {

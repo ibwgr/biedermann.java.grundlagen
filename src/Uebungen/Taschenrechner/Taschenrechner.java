@@ -4,6 +4,9 @@ import Others.Calculator.Display;
 import Others.Calculator.Expression;
 
 import javax.swing.*;
+import javax.swing.border.Border;
+import javax.swing.border.CompoundBorder;
+import javax.swing.border.EmptyBorder;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -28,16 +31,22 @@ public class Taschenrechner extends JFrame implements ActionListener {
 
         JPanel jpN = new JPanel();
         JPanel jpS = new JPanel();
-        jpN.setLayout(new FlowLayout());
-        jpS.setLayout(new FlowLayout());
-        jTextEntry = new JTextField("", 25);
+        jpN.setLayout(new GridLayout());
+        jpS.setLayout(new GridLayout());
+        jTextEntry = new JTextField();
         jTextEntry.setEditable(false);
+
+        Border line = BorderFactory.createLineBorder(Color.DARK_GRAY);
+        Border empty = new EmptyBorder(10, 10, 10, 10);
+        CompoundBorder border = new CompoundBorder(line, empty);
+        jTextEntry.setBorder(border);
+
         jTextEntry.setFont(new Font("Monospaced",Font.BOLD,30));
-        jTextResult = new JTextArea(3, 40);
+        jTextResult = new JTextArea();
         jTextResult.setEditable(false);
-        jTextResult.setFont(new Font("Monospaced",Font.PLAIN,20));
+        jTextResult.setFont(new Font("Monospaced",Font.PLAIN,16));
         jListHistory = new JList<String>();
-        jListHistory.setFont(new Font("Monospaced",Font.PLAIN,20));
+        jListHistory.setFont(new Font("Monospaced",Font.PLAIN,16));
 
         JTabbedPane tabbedPane = new JTabbedPane();
         JScrollPane scrollPaneResult = new JScrollPane(jTextResult);
@@ -46,6 +55,7 @@ public class Taschenrechner extends JFrame implements ActionListener {
         tabbedPane.add(scrollPaneResult, "Result");
         tabbedPane.add(scrollPaneHistory, "History");
         jpN.add(jTextEntry);
+//        jpN.add(new Button("ok"));
         jp.add(jpN, BorderLayout.NORTH);
         jpS.add(tabbedPane);
         jp.add(jpS, BorderLayout.SOUTH);
