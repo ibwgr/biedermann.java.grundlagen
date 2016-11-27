@@ -27,7 +27,7 @@ public class Taschenrechner extends JFrame implements ActionListener {
         this.setTitle("Taschenrechner");
         JPanel jp = new JPanel();
 
-        jp.setLayout(new BorderLayout());
+        jp.setLayout(new BorderLayout()); // BorderLayout ist auch Standard Layout, wenn kein Layout gesetzt wird.
 
         JPanel jpN = new JPanel();
         JPanel jpS = new JPanel();
@@ -36,7 +36,8 @@ public class Taschenrechner extends JFrame implements ActionListener {
         jTextEntry = new JTextField();
         jTextEntry.setEditable(false);
 
-        Border line = BorderFactory.createLineBorder(Color.DARK_GRAY);
+        // Border
+        Border line = BorderFactory.createLineBorder(Color.DARK_GRAY, 4);
         Border empty = new EmptyBorder(10, 10, 10, 10);
         CompoundBorder border = new CompoundBorder(line, empty);
         jTextEntry.setBorder(border);
@@ -85,6 +86,7 @@ public class Taschenrechner extends JFrame implements ActionListener {
         for (JButton jb : jButtons) {
             jb.setFont(new Font("Monospaced", Font.PLAIN,20));
             jb.addActionListener(this);
+            //jb.setActionCommand();
             jpC.add(jb);
         }
 
@@ -134,6 +136,7 @@ public class Taschenrechner extends JFrame implements ActionListener {
                         }
                         break;
                     default:
+                        //jb.getActionCommand();
                         textEntry = textEntry + jb.getText();
                         jTextEntry.setText(textEntry);
                 }

@@ -45,7 +45,7 @@ public class Expression extends Arithmetic {
             exprStrings.add(tempStr);
             parenthesesStr = ExpressionParser.getFirstParentheses(tempStr);
         }
-        while (!tempStr.matches("^-?\\d*\\.?\\d*$")) {
+        while (!tempStr.matches("^-?\\d*\\.?\\d*E*\\d*$")) {
             // find *,/
             Pattern pattern2 = Pattern.compile("(^|\\s*)-?\\d+\\.?\\d*\\s*(\\*|/)\\s*-?\\d+\\.?\\d*($|\\s*)");
             Matcher matcher2 = pattern2.matcher(tempStr);
