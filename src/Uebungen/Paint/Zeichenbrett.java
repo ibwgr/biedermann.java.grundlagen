@@ -16,10 +16,11 @@ import java.io.IOException;
 public class Zeichenbrett extends JPanel {
     private int[] x, y; // Koordinaten der Maus-Klicks
     private int n; // Anzahl Klicks
-    private int x2,y2,x2Old = -1,y2Old = -1;
+    private int x2,y2,x2Start,y2Start,x2Old = -1,y2Old = -1;
     private BufferedImage canvas;
     private Color color = Color.black;
     private int drawSize = 5;
+    private int drawObject = 0;
     int w,h;
 
 
@@ -37,6 +38,14 @@ public class Zeichenbrett extends JPanel {
 
     public void setDrawSize(int drawSize) {
         this.drawSize = drawSize;
+    }
+
+    public int getDrawObject() {
+        return drawObject;
+    }
+
+    public void setDrawObject(int drawObject) {
+        this.drawObject = drawObject;
     }
 
     public void clear() {
@@ -60,12 +69,40 @@ public class Zeichenbrett extends JPanel {
     }
 
     public void updateCanvas() {
-        if (x2Old >= 0 && y2Old >= 0) {
-            Graphics2D g = canvas.createGraphics();
-            g.setPaint(color);
-            g.setStroke(new BasicStroke(drawSize));
-            g.drawLine(x2,y2,x2Old,y2Old);
-            repaint();
+        switch (drawObject) {
+            case 0:
+                if (x2Old >= 0 && y2Old >= 0) {
+                    Graphics2D g = canvas.createGraphics();
+                    g.setPaint(color);
+                    g.setStroke(new BasicStroke(drawSize));
+                    g.drawLine(x2, y2, x2Old, y2Old);
+                    repaint();
+                }
+                break;
+            case 1:
+                if (x2Old < 0 && y2Old < 0) {
+                    Graphics2D g = canvas.createGraphics();
+                    g.setPaint(color);
+                    g.setStroke(new BasicStroke(drawSize));
+                    int x3,y3,w3,h3;
+                    if (x2Start < x2) {
+                        x3 = x2Start;
+                        w3 = x3 - x2;
+                    } else {
+                        x3 = x2;
+                        w3 = x3 - x2Start;
+                    }
+                    if (y2Start < y2) {
+                        y3 = y2Start;
+                        h3 = y3 - y2;
+                    } else {
+                        y3 = y2;
+                        h3 = y3 - y2Start;
+                    }
+                    g.drawRect(x3, y3, w3, h3);
+                    repaint();
+                }
+                break;
         }
     }
 
@@ -117,6 +154,8 @@ public class Zeichenbrett extends JPanel {
         public void mousePressed(MouseEvent e) {
             x2Old = e.getX();
             y2Old = e.getY();
+            x2Start = x2Old;
+            y2Start = y2Old;
 //            repaint();
         }
 
@@ -124,6 +163,7 @@ public class Zeichenbrett extends JPanel {
         public void mouseReleased(MouseEvent e) {
             y2Old = -1;
             x2Old = -1;
+            updateCanvas();
 //            repaint();
         }
     }

@@ -18,6 +18,7 @@ public class Paint extends JFrame implements ActionListener{
     private Zeichenbrett z;     // Zeichenbrett zum Linienmalen
     private JPanel fNorth;
     private JButton[] colorButtons = new JButton[10];
+    private JComboBox comboBox = new JComboBox();
     private Color[] colors = {Color.white,Color.yellow,Color.orange,Color.red,Color.pink,Color.blue,Color.green,Color.gray,Color.black};
     private Border line = BorderFactory.createLineBorder(Color.black, 4);
     private Border noline = BorderFactory.createLineBorder(Color.black, 0);
@@ -28,7 +29,7 @@ public class Paint extends JFrame implements ActionListener{
     private JButton clearButton, saveButton, openButton;
     private JFileChooser fileChooser = new JFileChooser();
     private int returnCode;
-    private int w, h;
+    private static int w = 640, h = 480;
 
     public Paint() {
         c = getContentPane();
@@ -78,6 +79,10 @@ public class Paint extends JFrame implements ActionListener{
             }
         });
 
+        comboBox = new JComboBox();
+        comboBox.addItem("Pinsel");
+        comboBox.addItem("Rechteck");
+        comboBox.addActionListener(this);
         clearButton = new JButton("clear");
         clearButton.addActionListener(this);
         clearButton.setActionCommand("clear");
@@ -90,6 +95,7 @@ public class Paint extends JFrame implements ActionListener{
 
         z = new Zeichenbrett();
 
+        fNorth.add(comboBox);
         fNorth.add(jSlider);
         fNorth.add(clearButton);
         fNorth.add(saveButton);
@@ -105,7 +111,7 @@ public class Paint extends JFrame implements ActionListener{
     public static void main(String[] args) {
         Paint fenster = new Paint();
         fenster.setTitle("Paint");
-        fenster.setSize(600,400);
+        fenster.setSize(w,h);
         fenster.pack();
         fenster.setVisible(true);
         fenster.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
@@ -113,13 +119,19 @@ public class Paint extends JFrame implements ActionListener{
 
 @Override
     public void actionPerformed(ActionEvent e) {
-        for (int i = 0; i < colors.length; i++) {
-            if (e.getSource() == colorButtons[i]) {
-                z.setColor(colors[i]);
-                colorButtons[i].setBorder(selectedBorder);
-            } else {
-                colorButtons[i].setBorder(noneSelectedBorder);
+        if (e.getSource() == comboBox) {
+            z.setDrawObject(comboBox.getSelectedIndex());
+        } else {
+            for (int i = 0; i < colors.length; i++) {
+                if (e.getSource() == colorButtons[i]) {
+                    z.setColor(colors[i]);
+                    colorButtons[i].setBorder(selectedBorder);
+                } else {
+                    colorButtons[i].setBorder(noneSelectedBorder);
+                }
             }
+
+
         }
 
         switch (e.getActionCommand()) {
