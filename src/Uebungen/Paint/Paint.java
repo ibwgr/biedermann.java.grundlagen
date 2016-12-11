@@ -93,7 +93,7 @@ public class Paint extends JFrame implements ActionListener{
         openButton.addActionListener(this);
         openButton.setActionCommand("open");
 
-        z = new Zeichenbrett();
+        z = new Zeichenbrett(w,h);
 
         fNorth.add(comboBox);
         fNorth.add(jSlider);
@@ -105,13 +105,15 @@ public class Paint extends JFrame implements ActionListener{
         fNorth.add(bRed);
 */
         c.add(fNorth, BorderLayout.NORTH);
-        c.add(z, BorderLayout.CENTER);
+        c.add(new JScrollPane(z), BorderLayout.CENTER);
     }
 
     public static void main(String[] args) {
         Paint fenster = new Paint();
         fenster.setTitle("Paint");
-        fenster.setSize(w,h);
+        Dimension dimension = new Dimension();
+        dimension.setSize(w,h);
+        fenster.setPreferredSize(dimension);
         fenster.pack();
         fenster.setVisible(true);
         fenster.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);

@@ -21,7 +21,9 @@ public class Zeichenbrett extends JPanel {
     private Color color = Color.black;
     private int drawSize = 5;
     private int drawObject = 0;
+    private boolean doTempDrawing = false;
     int w,h;
+    int x3,y3,w3,h3;
 
 
     public Color getColor() {
@@ -51,15 +53,17 @@ public class Zeichenbrett extends JPanel {
     public void clear() {
         Graphics2D g = canvas.createGraphics();
         g.setPaint(Color.white);
-        g.fillRect(0,0,600,400);
+        g.fillRect(0,0,w,h);
         repaint();
     }
 
-    public Zeichenbrett() { // Konstruktor
-        canvas = new BufferedImage(600,400,BufferedImage.TYPE_INT_RGB);
+    public Zeichenbrett(int w, int h) { // Konstruktor
+        this.w = w;
+        this.h = h;
+        canvas = new BufferedImage(w,h,BufferedImage.TYPE_INT_RGB);
         Graphics2D g = canvas.createGraphics();
         g.setPaint(Color.white);
-        g.fillRect(x2,y2,600,400);
+        g.fillRect(x2,y2,w,h);
 //        updateCanvas();
         n = 0;
         x = new int[1000];
@@ -80,26 +84,29 @@ public class Zeichenbrett extends JPanel {
                 }
                 break;
             case 1:
+                if (x2Start < x2) {
+                    x3 = x2Start;
+                    w3 = x2 - x3;
+                } else {
+                    x3 = x2;
+                    w3 = x2Start - x3;
+                }
+                if (y2Start < y2) {
+                    y3 = y2Start;
+                    h3 = y2 - y3;
+                } else {
+                    y3 = y2;
+                    h3 = y2Start - y3;
+                }
                 if (x2Old < 0 && y2Old < 0) {
                     Graphics2D g = canvas.createGraphics();
                     g.setPaint(color);
                     g.setStroke(new BasicStroke(drawSize));
-                    int x3,y3,w3,h3;
-                    if (x2Start < x2) {
-                        x3 = x2Start;
-                        w3 = x3 - x2;
-                    } else {
-                        x3 = x2;
-                        w3 = x3 - x2Start;
-                    }
-                    if (y2Start < y2) {
-                        y3 = y2Start;
-                        h3 = y3 - y2;
-                    } else {
-                        y3 = y2;
-                        h3 = y3 - y2Start;
-                    }
                     g.drawRect(x3, y3, w3, h3);
+                    doTempDrawing = false;
+                    repaint();
+                } else {
+                    doTempDrawing = true;
                     repaint();
                 }
                 break;
@@ -108,7 +115,17 @@ public class Zeichenbrett extends JPanel {
 
     public void paintComponent(Graphics g) {
         super.paintComponent(g);
-        g.drawImage(canvas, 0, 0, null);
+        if (doTempDrawing) {
+            g.drawImage(canvas, 0, 0, null);
+            switch (drawObject) {
+                case 1:
+                    g.setColor(color);
+                    g.drawRect(x3, y3, w3, h3);
+                    break;
+            }
+        } else {
+            g.drawImage(canvas, 0, 0, null);
+        }
     }
 
     public void openImage(File file) {
