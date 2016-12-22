@@ -737,7 +737,7 @@ public class Sudoku {
         int[][] quad, quadHide, quadSolved;
 
         quad = create();
-        quadHide = createHide(quad, 4);
+        quadHide = createHide(quad, 2);
 
         for (int i = 0; i < quad.length; i++) {
             for (int j = 0; j < quad.length; j++) {

@@ -50,11 +50,8 @@ public class Taschenrechner extends JFrame implements ActionListener {
         jListHistory.setFont(new Font("Monospaced",Font.PLAIN,16));
 
         JTabbedPane tabbedPane = new JTabbedPane();
-        JScrollPane scrollPaneResult = new JScrollPane(jTextResult);
-        JScrollPane scrollPaneHistory = new JScrollPane(jListHistory);
-
-        tabbedPane.add(scrollPaneResult, "Result");
-        tabbedPane.add(scrollPaneHistory, "History");
+        tabbedPane.add(new JScrollPane(jTextResult), "Result");
+        tabbedPane.add(new JScrollPane(jListHistory), "History");
         jpN.add(jTextEntry);
 //        jpN.add(new Button("ok"));
         jp.add(jpN, BorderLayout.NORTH);

@@ -1,10 +1,7 @@
 package Uebungen.Swing;
 
-import com.sun.codemodel.internal.JOp;
-import sun.plugin2.message.Message;
 
 import javax.swing.*;
-import java.awt.event.ComponentAdapter;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 

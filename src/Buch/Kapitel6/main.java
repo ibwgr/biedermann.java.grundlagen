@@ -1,4 +1,4 @@
-package A6;
+package Buch.Kapitel6;
 
 /**
  * Created by dieterbiedermann on 13.09.16.
