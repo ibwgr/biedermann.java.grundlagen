@@ -62,6 +62,7 @@ public class Expression extends Arithmetic {
                         "[<(\\[{\\\\\\^\\-=$!|\\]\\})‌​?*+.>]", "\\\\$0")
                         , Display.getDouble(arithmetics.get(arithmetics.size()-1).getResult()));
                 exprStrings.add(tempStr);
+                matcher2 = pattern2.matcher(tempStr);
                 //this.setResult(arithmetics.get(arithmetics.size()-1).getResult());
             }
             // find +,-
@@ -80,6 +81,7 @@ public class Expression extends Arithmetic {
                         "[<(\\[{\\\\\\^\\-=$!|\\]\\})‌​?*+.>]", "\\\\$0")
                         , Display.getDouble(arithmetics.get(arithmetics.size()-1).getResult()));
                 exprStrings.add(tempStr);
+                matcher3 = pattern3.matcher(tempStr);
                 //this.setResult(arithmetics.get(arithmetics.size()-1).getResult());
             }
         }
