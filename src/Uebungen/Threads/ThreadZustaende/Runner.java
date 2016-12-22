@@ -1,4 +1,4 @@
-package Uebungen.ThreadZustaende;
+package Uebungen.Threads.ThreadZustaende;
 
 /**
  * Created by dieterbiedermann on 08.12.16.

@@ -1,4 +1,4 @@
-package Uebungen.ThreadTest;
+package Uebungen.Threads.ThreadTest;
 
 /**
  * Created by dieterbiedermann on 08.12.16.

@@ -1,8 +1,12 @@
 package Uebungen.Swing;
 
+import javax.imageio.ImageIO;
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.*;
+import java.awt.image.BufferedImage;
+import java.io.IOException;
+import java.net.URL;
 
 /**
  * Created by dieterbiedermann on 22.11.16.
@@ -51,7 +55,31 @@ public class SwingTest extends JClosableFrame {
                 SwingTest.super.setTitle("x=" + e.getX() + ", y=" + e.getY());
             }
         });
+
+        JPanel testPanel = new JPanel();
+
+//        ImageIcon testImage = new ImageIcon("http://www.wine-logistix.de/magento_pic/efulfillment/ES-TE-0081_2_.jpg");
+
+//        Image newImage = testImage.getImage();
+
+
+        JPanel panel = new JPanel() {
+            @Override
+            protected void paintComponent(Graphics g) {
+                super.paintComponent(g);
+                BufferedImage img = null;
+                try {
+                    img = ImageIO.read(new URL("http://www.wine-logistix.de/magento_pic/efulfillment/ES-TE-0081_2_.jpg"));
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+                g.drawImage(img, 0, 0, null);
+            }
+        };
+
+        this.add(panel);
     }
+
 
     public static void main(String[] args) {
         SwingTest st = new SwingTest();
