@@ -1,4 +1,4 @@
-package com.large.file;
+package Semesterarbeit;
 
 import java.io.IOException;
 import java.nio.charset.StandardCharsets;
@@ -12,13 +12,13 @@ public class Java8StreamRead {
 
     public static void main(String[] args) {
 
-        Path file = Paths.get("c:/temp/my-large-file.csv");
+        Path file = Paths.get("myDirectory/liechtenstein-latest.csv");
         try
         {
             Stream<String> lines = Files.lines( file, StandardCharsets.UTF_8 );
             for( String line : (Iterable<String>) lines::iterator )
             {
-               //System.out.println(line);
+               System.out.println(line);
             }
         } catch (IOException e){
             e.printStackTrace();

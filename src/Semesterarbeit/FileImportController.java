@@ -3,6 +3,8 @@ package Semesterarbeit;
 import java.io.File;
 import java.util.LinkedList;
 import java.util.Vector;
+import java.util.concurrent.ArrayBlockingQueue;
+import java.util.concurrent.BlockingQueue;
 
 /**
  * Created by Dieter on 22.12.2016.
@@ -10,7 +12,7 @@ import java.util.Vector;
 public class FileImportController {
 
     private File file;
-    private LinkedList<String> rowQueue = new LinkedList<>();
+    private BlockingQueue<String> rowQueue = new ArrayBlockingQueue<String>(1024);
     private Vector modelList = new Vector();
 
     public FileImportController(File file) {
@@ -35,7 +37,11 @@ public class FileImportController {
     }
 
     public void putRow(String s) {
-        rowQueue.addLast(s);
+        try {
+            rowQueue.put(s);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
     }
 
     public synchronized String getRow() {
@@ -47,8 +53,12 @@ public class FileImportController {
             }
         }
         notify();
-        String row = rowQueue.getFirst();
-        rowQueue.removeFirst();
+        String row = null;
+        try {
+            row = rowQueue.take();
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
         return row;
     }
 
