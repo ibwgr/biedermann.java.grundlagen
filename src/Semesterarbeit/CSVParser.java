@@ -24,13 +24,15 @@ public class CSVParser extends Thread {
     public void run() {
         while (!fileImportController.queueIsEmpty()) {
             String row = fileImportController.getRow();
-            String[] rowItem = row.split("\\|");
-            /*
-            * ToDO --> TEST
-            */
-            System.out.println(this.getName() + " -> " + row);
+            if (row != null) {
+                String[] rowItem = row.split("\\|");
+                /*
+                * ToDO --> TEST
+                */
+                //System.out.println(this.getName() + " -> " + row);
 
-            fileImportController.putModelRow(new Vector(Arrays.asList(rowItem)));
+                fileImportController.putModelRow(new Vector(Arrays.asList(rowItem)));
+            }
         }
     }
 

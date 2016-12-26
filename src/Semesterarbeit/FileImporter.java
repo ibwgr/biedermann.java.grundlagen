@@ -27,6 +27,7 @@ public class FileImporter extends Thread {
 
         try {
             br = new BufferedReader(new FileReader(file));
+            //fileImportController.setRowCount(br.lines().count());
 
             // alle Zeilen lesen
             while (br.ready()) {

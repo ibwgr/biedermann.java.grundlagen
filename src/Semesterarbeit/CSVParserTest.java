@@ -19,6 +19,7 @@ import java.util.Vector;
 public class CSVParserTest extends JFrame {
 
     private JButton button;
+    private JLabel statusLabel;
     private JList<String> jlist;
     private JTable table;
     private File myFile;
@@ -29,7 +30,6 @@ public class CSVParserTest extends JFrame {
         jpanel.setLayout(new BorderLayout());
 
         button = new JButton("Open File");
-
         button.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
@@ -42,9 +42,10 @@ public class CSVParserTest extends JFrame {
         });
 
         //jlist.setListData(new String[]{"hallo", "test"});
-
+        statusLabel = new JLabel();
 
         jpanel.add(button, BorderLayout.NORTH);
+        jpanel.add(statusLabel, BorderLayout.SOUTH);
         table = new JTable();
         jpanel.add(new JScrollPane(table), BorderLayout.CENTER);
         this.add(jpanel);
@@ -69,7 +70,7 @@ public class CSVParserTest extends JFrame {
                 return "CSV Datei";
             }
         };
-        fileChooser.setFileFilter(filter);
+        //fileChooser.setFileFilter(filter);
 
         fileChooser.setMultiSelectionEnabled(false);
         int returnCode = fileChooser.showOpenDialog(this);
@@ -82,7 +83,7 @@ public class CSVParserTest extends JFrame {
     private TableModel parseCSVAndCreateTableModel(final File file)
     {
 
-        FileImportController fileImportController = new FileImportController(file);
+        FileImportController fileImportController = new FileImportController(this, file);
 
         final Vector v = fileImportController.getVector();
 
@@ -92,8 +93,13 @@ public class CSVParserTest extends JFrame {
 
     }
 
+    public void setStatusText(String s) {
+        statusLabel.setText(s);
+    }
+
     public static void main(String[] args) {
         CSVParserTest testGui = new CSVParserTest();
         testGui.setVisible(true);
     }
+
 }
