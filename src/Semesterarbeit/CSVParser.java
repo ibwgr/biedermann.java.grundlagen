@@ -1,14 +1,9 @@
 package Semesterarbeit;
 
-import javax.swing.*;
-import javax.swing.filechooser.FileFilter;
-import javax.swing.table.DefaultTableModel;
-import java.io.BufferedReader;
-import java.io.File;
-import java.io.FileReader;
 import java.util.Arrays;
-import java.util.LinkedList;
 import java.util.Vector;
+import java.util.concurrent.ArrayBlockingQueue;
+import java.util.concurrent.BlockingQueue;
 
 /**
  * Created by Dieter on 21.12.2016.
@@ -16,20 +11,41 @@ import java.util.Vector;
 public class CSVParser extends Thread {
 
     private FileImportController fileImportController;
+    private DatabaseHandler dbHandler;
+    private BlockingQueue<String> queue;
 
-    public CSVParser(FileImportController fileImportController) {
+    public CSVParser(FileImportController fileImportController, DatabaseHandler dbHandler) {
         this.fileImportController = fileImportController;
+        this.dbHandler = dbHandler;
+//        this.queue = queue;
     }
 
     public void run() {
-        while (!fileImportController.queueIsEmpty()) {
+        while (!fileImportController.allRowsProcessed()) {
+            //String row = null;
+            //row = queue.take();
             String row = fileImportController.getRow();
             if (row != null) {
                 String[] rowItem = row.split("\\|");
-                /*
+                /**
                 * ToDO --> TEST
                 */
-                //System.out.println(this.getName() + " -> " + row);
+                System.out.println(this.getName() + " -> " + row);
+
+                /**
+                 * parse CSV File, check for update/insert
+                 */
+                if (dbHandler.exists("poi", rowItem[1])) {
+                    /**
+                     * update, add to updateQueue
+                     */
+                    System.out.println("exists");
+                } else {
+                    /**
+                     * insert, add to insertQueue
+                     */
+                    dbHandler.insertPoi(rowItem);
+                }
 
                 fileImportController.putModelRow(new Vector(Arrays.asList(rowItem)));
             }

@@ -2,10 +2,7 @@ package Semesterarbeit;
 
 import java.io.File;
 import java.util.LinkedList;
-import java.util.NoSuchElementException;
 import java.util.Vector;
-import java.util.concurrent.ArrayBlockingQueue;
-import java.util.concurrent.BlockingQueue;
 
 /**
  * Created by Dieter on 22.12.2016.
@@ -14,26 +11,40 @@ public class FileImportController {
 
     private File file;
     private CSVParserTest csvParserTest;
-    private BlockingQueue<String> rowQueue = new ArrayBlockingQueue<String>(1024);
+    private DatabaseHandler dbHandler;
+    //private BlockingQueue<String> rowQueue = new ArrayBlockingQueue<String>(1024);
+    private LinkedList<String> rowQueue = new LinkedList<String>();
+    private LinkedList<String> cityInsertQueue = new LinkedList<String>();
+    private LinkedList<String> cityUpdateQueue = new LinkedList<String>();
+    private LinkedList<String> poiInsertQueue = new LinkedList<String>();
+    private LinkedList<String> poiUpdateQueue = new LinkedList<String>();
     private Vector modelList = new Vector();
-    private long rowCount = 0;
+    private long rowQueueCount = -1;
     private long counter = 0;
 
-    public FileImportController(File file) {
+    public FileImportController(File file, CSVParserTest csvParserTest) {
         this.file = file;
         this.csvParserTest = csvParserTest;
+        this.dbHandler = new DatabaseHandler();
     }
 
 
     public Vector getVector() {
 
         FileImporter fileImporter = new FileImporter(file, this);
-        FileImportStatus fileImportStatus = new FileImportStatus(this);
         fileImporter.start();
 
-        CSVParser parser1 = new CSVParser(this);
-        CSVParser parser2 = new CSVParser(this);
-        CSVParser parser3 = new CSVParser(this);
+/*
+        try {
+            Thread.sleep(1000);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+*/
+
+        CSVParser parser1 = new CSVParser(this, dbHandler);
+        CSVParser parser2 = new CSVParser(this, dbHandler);
+        CSVParser parser3 = new CSVParser(this, dbHandler);
         //CSVParser parser4 = new CSVParser(this);
 
         parser1.start();
@@ -41,17 +52,15 @@ public class FileImportController {
         parser3.start();
         //parser4.start();
 
+        FileImportStatus fileImportStatus = new FileImportStatus(this);
         fileImportStatus.start();
 
         return modelList;
     }
 
-    public void putRow(String s) {
-        try {
-            rowQueue.put(s);
-        } catch (InterruptedException e) {
-            e.printStackTrace();
-        }
+    public synchronized void putRow(String s) {
+        rowQueue.addLast(s);
+        notify();
     }
 
     public synchronized String getRow() {
@@ -63,17 +72,14 @@ public class FileImportController {
             }
         }
         notify();
-        String row = null;
-        try {
-            row = rowQueue.take();
-        } catch (InterruptedException e) {
-            e.printStackTrace();
-        }
+        String row = rowQueue.getFirst();
+        rowQueue.removeFirst();
         return row;
     }
 
     public void putModelRow(Vector vector) {
         modelList.add(vector);
+        csvParserTest.updateTable();
         counter++;
     }
 
@@ -81,11 +87,22 @@ public class FileImportController {
         return rowQueue.isEmpty();
     }
 
-    public void setRowCount(long count) {
-        rowCount = count;
+    public void setRowQueueCount(long count) {
+        rowQueueCount = count;
     }
 
     public void showStatus() {
-        csvParserTest.setStatusText(counter + " / " + rowCount);
+        csvParserTest.setStatusText(counter + " / " + rowQueueCount);
+    }
+
+    public boolean allRowsProcessed() {
+        return counter == rowQueueCount;
+    }
+
+    public void increaseRowQueueCount() {
+        if (rowQueueCount < 0) {
+            rowQueueCount = 0;
+        }
+        rowQueueCount++;
     }
 }

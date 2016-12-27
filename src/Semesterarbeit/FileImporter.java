@@ -9,9 +9,8 @@ import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
-import java.util.Arrays;
-import java.util.LinkedList;
-import java.util.Vector;
+import java.util.*;
+import java.util.concurrent.BlockingQueue;
 import java.util.stream.Stream;
 
 /**
@@ -21,43 +20,28 @@ public class FileImporter extends Thread {
 
     private File file;
     private FileImportController fileImportController;
+    private BlockingQueue<String> queue;
 
     public FileImporter(File file, FileImportController fileImportController) {
         this.file = file;
         this.fileImportController = fileImportController;
+//        this.queue = queue;
     }
 
     public void run() {
-//        BufferedReader br = null;
 
         try {
-//            br = new BufferedReader(new FileReader(file));
             Stream<String> lines = Files.lines(file.toPath(), StandardCharsets.UTF_8);
-            //fileImportController.lines.count();
             for (String line : (Iterable<String>) lines::iterator) {
+                //queue.put(line);
                 fileImportController.putRow(line);
                 System.out.println(line);
+                fileImportController.increaseRowQueueCount();
             }
             lines.close();
-            // alle Zeilen lesen
-//            while (br.ready()) {
-//                fileImportController.putRow(br.readLine());
-//            }
-
         } catch (Exception e) {
             e.printStackTrace();
         }
-        /*
-        } finally {
-            try {
-                if (br != null) {
-                    br.close();
-                }
-            } catch(Exception e) {
-                e.printStackTrace();
-            }
-        }
-*/
 
     }
 

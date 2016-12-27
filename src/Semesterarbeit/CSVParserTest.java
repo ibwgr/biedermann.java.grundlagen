@@ -83,7 +83,7 @@ public class CSVParserTest extends JFrame {
     private TableModel parseCSVAndCreateTableModel(final File file)
     {
 
-        FileImportController fileImportController = new FileImportController(this, file);
+        FileImportController fileImportController = new FileImportController(file, this);
 
         final Vector v = fileImportController.getVector();
 
@@ -102,4 +102,9 @@ public class CSVParserTest extends JFrame {
         testGui.setVisible(true);
     }
 
+    public void updateTable() {
+        try {
+            table.updateUI();
+        } catch (NullPointerException e) {}
+    }
 }
