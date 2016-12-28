@@ -1,6 +1,6 @@
 public class multiValueInsertExample() {
   
-  public static void main() {
+  public static void main(String[] args) {
     long start = System.currentTimeMillis();
     StringBuilder build = new StringBuilder("insert into insert_values (foo, bar, baz) values ");
     for (int i = 0; i &lt; 1000; i++) {
