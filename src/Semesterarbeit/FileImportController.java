@@ -1,8 +1,8 @@
 package Semesterarbeit;
 
 import java.io.File;
-import java.util.LinkedList;
-import java.util.Vector;
+import java.util.*;
+import java.util.concurrent.TimeUnit;
 
 /**
  * Created by Dieter on 22.12.2016.
@@ -21,11 +21,12 @@ public class FileImportController {
     private Vector modelList = new Vector();
     private long rowQueueCount = -1;
     private long counter = 0;
+    private long startTime = System.nanoTime();
+    private ArrayList<String> errorQueue = new ArrayList<>();
 
     public FileImportController(File file, CSVParserTest csvParserTest) {
         this.file = file;
         this.csvParserTest = csvParserTest;
-        this.dbHandler = new DatabaseHandler();
     }
 
 
@@ -42,15 +43,17 @@ public class FileImportController {
         }
 */
 
-        CSVParser parser1 = new CSVParser(this, dbHandler);
-        CSVParser parser2 = new CSVParser(this, dbHandler);
-        CSVParser parser3 = new CSVParser(this, dbHandler);
-        //CSVParser parser4 = new CSVParser(this);
+        CSVParser parser1 = new CSVParser(this);
+        CSVParser parser2 = new CSVParser(this);
+        CSVParser parser3 = new CSVParser(this);
+        CSVParser parser4 = new CSVParser(this);
+//        CSVParser parser5 = new CSVParser(this);
 
         parser1.start();
         parser2.start();
         parser3.start();
-        //parser4.start();
+        parser4.start();
+//        parser5.start();
 
         FileImportStatus fileImportStatus = new FileImportStatus(this);
         fileImportStatus.start();
@@ -74,13 +77,13 @@ public class FileImportController {
         notify();
         String row = rowQueue.getFirst();
         rowQueue.removeFirst();
+        counter++;
         return row;
     }
 
     public void putModelRow(Vector vector) {
         modelList.add(vector);
-        csvParserTest.updateTable();
-        counter++;
+        //csvParserTest.updateTable();
     }
 
     public boolean queueIsEmpty() {
@@ -92,7 +95,8 @@ public class FileImportController {
     }
 
     public void showStatus() {
-        csvParserTest.setStatusText(counter + " / " + rowQueueCount);
+        long estimatedTime = System.nanoTime() - startTime;
+        csvParserTest.setStatusText(counter + " / " + rowQueueCount + " (elapsed time: " + String.valueOf(TimeUnit.NANOSECONDS.toSeconds(estimatedTime)) + ")");
     }
 
     public boolean allRowsProcessed() {
@@ -104,5 +108,10 @@ public class FileImportController {
             rowQueueCount = 0;
         }
         rowQueueCount++;
+    }
+
+    public void addErrorQueue(ArrayList<String> poiList) {
+//        errorQueue.addAll(poiList);
+        putModelRow(new Vector(Arrays.asList(poiList)));
     }
 }
